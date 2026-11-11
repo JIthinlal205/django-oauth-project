@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Lucide Icons & Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+
+<body class="bg-[#0b101b] min-h-screen flex items-center justify-center p-4 selection:bg-blue-500 selection:text-white">
+
+    <!-- Dashboard Card -->
+    <div
+        class="w-full max-w-md bg-[#111827]/70 backdrop-blur-xl border border-white/5 rounded-3xl p-8 sm:p-10 shadow-2xl flex flex-col items-center text-center">
+
+        <!-- User Avatar / Icon -->
+        {% for account in user.socialaccount_set.all %}
+        {% if account.get_avatar_url %}
+        <img src="{{ account.get_avatar_url }}" alt="{{ user.username }}"
+            class="w-20 h-20 rounded-2xl border-2 border-indigo-500/30 shadow-lg shadow-indigo-500/25 mb-4 object-cover">
+        {% endif %}
+        {% empty %}
+        <div
+            class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-indigo-500/25 mb-4">
+            {{ user.username|first|upper }}
+        </div>
+        {% endfor %}
+
+        <!-- Welcome & Name -->
+        <h1 class="text-2xl font-bold tracking-tight text-white mb-1">
+            {% if user.first_name %}{{ user.first_name }} {{ user.last_name }}{% else %}{{ user.username }}{% endif %}
+        </h1>
+        <p class="text-sm text-slate-400 mb-6 font-normal">{{ user.email }}</p>
+
+        <!-- Account Details Box -->
+        <div class="w-full bg-[#0b101b]/60 border border-white/5 rounded-2xl p-4 mb-6 text-left text-xs space-y-2.5">
+            <div class="flex justify-between items-center">
+                <span class="text-slate-400">Username</span>
+                <span class="font-mono text-slate-200 font-medium">{{ user.username }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-slate-400">Provider</span>
+                <span
+                    class="capitalize px-2.5 py-0.5 rounded-full bg-indigo-500/15 border border-indigo-500/20 text-indigo-300 font-semibold text-[11px]">
+                    {% for account in user.socialaccount_set.all %}
+                    {{ account.provider }}
+                    {% empty %}
+                    Local
+                    {% endfor %}
+                </span>
+            </div>
+            <div class="flex justify-between items-center">
+                <span class="text-slate-400">Auth Status</span>
+                <span class="text-emerald-400 font-medium flex items-center gap-1.5 text-[11px]">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 inline-block animate-pulse"></span> Connected
+                </span>
+            </div>
+        </div>
+
+        <!-- Log Out Form -->
+        <form method="post" action="{% url 'account_logout' %}" class="w-full">
+            {% csrf_token %}
+            <button type="submit"
+                class="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl font-medium text-white bg-red-600/90 hover:bg-red-600 active:scale-[0.99] transition duration-150 shadow-lg shadow-red-600/20 cursor-pointer text-sm">
+                <i data-lucide="log-out" class="w-4 h-4"></i>
+                <span>Sign Out</span>
+            </button>
+        </form>
+
+        <!-- Divider & Bottom Caption -->
+        <div class="w-full border-t border-white/5 my-6"></div>
+        <p class="text-xs text-slate-500 font-medium tracking-wide">
+            Protected by Django • OAuth 2.0 Encrypted
+        </p>
+
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

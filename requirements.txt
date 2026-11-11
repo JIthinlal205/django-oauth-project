@@ -1,0 +1,27 @@
+# Core Framework & Auth
+Django==6.1.3
+django-allauth==65.21.1
+
+# Environment Variables
+python-dotenv==1.0.1
+
+# SSL / HTTPS support (optional for local OAuth development)
+django-sslserver==0.22
+
+# Security, Tokens & HTTP
+requests==2.34.2
+cryptography==50.0.2
+PyJWT==2.15.1
+oauthlib==4.0.1
+
+# Supporting dependencies
+asgiref==3.13.0
+certifi==2026.10.23
+cffi==2.1.1
+charset-normalizer==3.5.2
+idna==3.20
+pycparser==3.12
+sqlparse==0.6.1
+tzdata==2026.6
+urllib3==2.8.0
+
