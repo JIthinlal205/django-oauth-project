@@ -39,8 +39,16 @@ SECRET_KEY = 'django-insecure-15^n6j)&0try&rebxa$hoouop6wknxaao+tk6$b=g73f6^u95c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'django-oauth-project.onrender.com',
+    'localhost',
+    '127.0.0.1',
+    '*',  # Allows all hosts during testing
+]
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://django-oauth-project.onrender.com',
+]
 
 # Application definition
 
